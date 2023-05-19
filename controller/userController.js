@@ -1,5 +1,6 @@
 const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
+// create user controller
 const createUser = asyncHandler(async (req, res) => {
   const email = req.body.email;
   const findUser = await User.findOne({ email: email });
@@ -12,6 +13,14 @@ const createUser = asyncHandler(async (req, res) => {
     throw new Error("USER Already Exist");
   }
 });
-
-module.exports = { createUser };
- 
+// login user controller
+const logInUser = asyncHandler(async (req, res) => {
+  const { email, password } = req.body;
+  const findUser = await User.findOne({ email });
+  if (findUser &&( await findUser.isPasswordMatched(password))) {
+    res.send(findUser);
+  } else { 
+    throw new Error("Invalid User Email Or Password ");
+  }
+});
+module.exports = { createUser, logInUser };
