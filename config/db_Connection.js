@@ -1,11 +1,13 @@
 const mongoose = require("mongoose");
-const db_Connection = () => {
+const dotenv = require("dotenv");
+dotenv.config();
+const db_Connection = async () => {
   try {
-  mongoose.connect(`mongodb+srv://mdsoliman:${process.env.DB_PASS}@cluster0.c0ef2cd.mongodb.net/${process.env.DB_NAME}`);
+    await mongoose.connect(`mongodb://0.0.0.0/${process.env.DB_NAME}`);
     console.log("DB Connection Success Full");
   } catch (error) {
     // throw new Error(error);
-    console.log("DB Error")
+    console.log(error);
   }
 };
 module.exports = db_Connection;
