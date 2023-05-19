@@ -10,6 +10,6 @@ const router = express.Router();
 router.post("/register", createUser);
 router.get("/loginuser", logInUser);
 router.get("/getalluser", getAllUser);
-router.get("/getauser", getAUser);
+router.get("/getauser/:id", getAUser);
 
 module.exports = router;

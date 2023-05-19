@@ -40,5 +40,18 @@ const getAllUser = asyncHandler(async (req, res) => {
     throw new Error("User Not Found ");
   }
 });
-
-module.exports = { createUser, logInUser, getAllUser };
+const getAUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const findAUser = await User.findById(id);
+    res.json({
+      firstname: findAUser?.firstname,
+      lastname: findAUser?.lastname,
+      email: findAUser?.email,
+      mobile: findAUser?.mobile,
+    });
+  } catch (error) {
+    throw new Error("User Not Found ");
+  }
+});
+module.exports = { createUser, logInUser, getAllUser, getAUser };
