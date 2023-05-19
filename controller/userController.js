@@ -40,6 +40,7 @@ const getAllUser = asyncHandler(async (req, res) => {
     throw new Error("User Not Found ");
   }
 });
+// get a singel user
 const getAUser = asyncHandler(async (req, res) => {
   const { id } = req.params;
   try {
@@ -54,4 +55,25 @@ const getAUser = asyncHandler(async (req, res) => {
     throw new Error("User Not Found ");
   }
 });
-module.exports = { createUser, logInUser, getAllUser, getAUser };
+// delete a single user
+const deleteAUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  try {
+    const deletUser = await User.findByIdAndDelete(id);
+    if (!deletUser) {
+      res.json({
+        message: "User NOT Exist",
+      });
+    } else {
+      res.json({
+        firstname: deletUser?.firstname,
+        lastname: deletUser?.lastname,
+        email: deletUser?.email,
+        mobile: deletUser?.mobile,
+      });
+    }
+  } catch (error) {
+    throw new Error("User Not Found ");
+  }
+});
+module.exports = { createUser, logInUser, getAllUser, getAUser, deleteAUser };
