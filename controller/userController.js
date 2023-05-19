@@ -31,4 +31,14 @@ const logInUser = asyncHandler(async (req, res) => {
     throw new Error("Invalid User Email Or Password ");
   }
 });
-module.exports = { createUser, logInUser };
+// get all user
+const getAllUser = asyncHandler(async (req, res) => {
+  try {
+    const getuser = await User.find();
+    res.send(getuser);
+  } catch (error) {
+    throw new Error("User Not Found ");
+  }
+});
+
+module.exports = { createUser, logInUser, getAllUser };
