@@ -1,3 +1,4 @@
+const { genrateToken } = require("../config/jwtToken");
 const User = require("../models/userModel");
 const asyncHandler = require("express-async-handler");
 // create user controller
@@ -19,10 +20,12 @@ const logInUser = asyncHandler(async (req, res) => {
   const findUser = await User.findOne({ email });
   if (findUser && (await findUser.isPasswordMatched(password))) {
     res.send({
-      firstname: findUser.firstname,
-      lastname: findUser.lastname,
-      email: findUser.email,
-      mobile: findUser.mobile,
+      _id: findUser?._id,
+      firstname: findUser?.firstname,
+      lastname: findUser?.lastname,
+      email: findUser?.email,
+      mobile: findUser?.mobile,
+      token: genrateToken(findUser?._id),
     });
   } else {
     throw new Error("Invalid User Email Or Password ");
