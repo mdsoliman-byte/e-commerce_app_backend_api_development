@@ -76,4 +76,35 @@ const deleteAUser = asyncHandler(async (req, res) => {
     throw new Error("User Not Found ");
   }
 });
-module.exports = { createUser, logInUser, getAllUser, getAUser, deleteAUser };
+const updateAUser = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  // const aUser = req.body;
+  try {
+    const updateUser = await User.findByIdAndUpdate(
+      id,
+      {
+        firstname: req.body?.firstname,
+        lastname: req.body?.lastname,
+        email: req.body?.email,
+        mobile: req.body?.mobile,
+      },
+      { new: true }
+    );
+    res.json({
+      firstname: req.body?.firstname,
+      lastname: req.body?.lastname,
+      email: req.body?.email,
+      mobile: req.body?.mobile,
+    });
+  } catch (error) {
+    throw new Error("User Not Found ");
+  }
+});
+module.exports = {
+  createUser,
+  logInUser,
+  getAllUser,
+  getAUser,
+  deleteAUser,
+  updateAUser,
+};
